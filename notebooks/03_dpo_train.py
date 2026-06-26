@@ -76,6 +76,9 @@ assert torch.cuda.is_available(), "DPO needs a CUDA GPU. See HARDWARE-GUIDE.md."
 # sequences, not from a second copy of the weights.
 
 # %%
+import os
+os.environ["UNSLOTH_USE_SDPA"] = "1"
+os.environ["UNSLOTH_USE_XFORMERS"] = "0"
 from unsloth import FastLanguageModel
 from peft import PeftModel
 
