@@ -21,6 +21,8 @@ adapters/dpo/
 adapters/orpo/
 gguf/
 *.gguf
+*.safetensors
+*.zip
 runs/
 wandb/
 
