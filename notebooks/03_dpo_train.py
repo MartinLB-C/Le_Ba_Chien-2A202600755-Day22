@@ -89,10 +89,10 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     dtype=None,
     load_in_4bit=True,
 )
+from unsloth.chat_templates import get_chat_template
+tokenizer = get_chat_template(tokenizer, chat_template="chatml")
 if tokenizer.pad_token is None:
     tokenizer.pad_token = tokenizer.eos_token
-    from unsloth.chat_templates import get_chat_template
-    tokenizer = get_chat_template(tokenizer, chat_template="chatml")
 
 # Load SFT adapter on top of base
 model = PeftModel.from_pretrained(model, str(SFT_PATH), is_trainable=True)

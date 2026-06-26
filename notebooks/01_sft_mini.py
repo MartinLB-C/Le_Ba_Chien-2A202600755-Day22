@@ -81,10 +81,10 @@ model, tokenizer = FastLanguageModel.from_pretrained(
 )
 
 # Critical for batch training — Qwen tokenizers ship without pad token.
+from unsloth.chat_templates import get_chat_template
+tokenizer = get_chat_template(tokenizer, chat_template="chatml")
 if tokenizer.pad_token is None:
     tokenizer.pad_token = tokenizer.eos_token
-    from unsloth.chat_templates import get_chat_template
-    tokenizer = get_chat_template(tokenizer, chat_template="chatml")
     print("Set tokenizer.pad_token = eos_token")
 
 # %%
