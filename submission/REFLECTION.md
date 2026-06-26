@@ -1,7 +1,7 @@
 # Reflection — Lab 22 (DPO/ORPO Alignment)
 
-**Tên:** _Lê Bá Chiến_
-**Cohort:** _A20-K1_
+**Tên:** _Lê Bá Chiến - 2A202600755_
+**Cohort:** _AI20K_
 **Tier đã chạy:** _T4_
 **Date:** _2026-06-27_
 
