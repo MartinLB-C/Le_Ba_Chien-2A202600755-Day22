@@ -232,14 +232,17 @@ def judge_with_openai(rows):
         from openai import OpenAI
     except ImportError:
         return None
-    client = OpenAI()
+    client = OpenAI(
+        api_key=os.environ.get("DASHSCOPE_API_KEY", os.environ.get("OPENAI_API_KEY")),
+        base_url=os.environ.get("DASHSCOPE_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1")
+    )
     results = []
     for p, sft, dpo in zip(EVAL_PROMPTS, sft_outputs, dpo_outputs):
         msg = JUDGE_PROMPT_TEMPLATE.format(
             prompt=p["prompt"], category=p["category"], sft=sft, dpo=dpo
         )
         resp = client.chat.completions.create(
-            model=os.environ.get("JUDGE_MODEL", "gpt-4o-mini"),
+            model=os.environ.get("JUDGE_MODEL", "qwen-plus"),
             messages=[{"role": "user", "content": msg}],
             temperature=0,
             response_format={"type": "json_object"},
@@ -283,8 +286,8 @@ def judge_with_anthropic(rows):
 # %%
 judge_results = None
 
-if os.environ.get("OPENAI_API_KEY"):
-    print("Found OPENAI_API_KEY — running gpt-4o-mini judge")
+if os.environ.get("DASHSCOPE_API_KEY") or os.environ.get("OPENAI_API_KEY"):
+    print("Found API KEY — running Alibaba DashScope judge (qwen-plus)")
     judge_results = judge_with_openai(rows)
 elif os.environ.get("ANTHROPIC_API_KEY"):
     print("Found ANTHROPIC_API_KEY — running claude-haiku judge")
